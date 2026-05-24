@@ -1,0 +1,22 @@
+# Development Tasks Checklist
+
+- [x] Phase 1: Directory Setup & Initial Configurations
+  - [x] Initialize backend configuration and package dependencies
+  - [x] Initialize React Vite frontend and package dependencies
+- [x] Phase 2: MySQL Database Setup & Initialization Logic
+  - [x] Write schema.sql
+  - [x] Implement database connection and automated table bootstrap in Node
+- [x] Phase 3: Backend API Development
+  - [x] Implement controllers (Auth, Property, Booking, Admin Stats)
+  - [x] Implement token authorization middleware
+  - [x] Set up Express routing & server entry point
+- [x] Phase 4: Frontend Development (React + Vanilla CSS)
+  - [x] Create core style guide and dynamic CSS index
+  - [x] Implement AuthContext & API Service Integration
+  - [x] Build reusable UI layout components (Navbar, Footer, PropertyCard, Calculator)
+  - [x] Create basic pages (Home, Login, Register, Listings, Details, Booking, Admin)
+- [x] Phase 5: Education Guides Development (Side Folder)
+  - [x] Create `guide/` directory containing the markdown articles explaining every element
+- [x] Phase 6: Verification & Complete Demo Run
+  - [x] Seed test properties and users
+  - [x] Verify system features locally
