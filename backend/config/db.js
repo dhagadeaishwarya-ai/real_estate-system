@@ -101,10 +101,27 @@ async function createTables() {
     ) ENGINE=InnoDB;
   `;
 
+  const questionsTable = `
+    CREATE TABLE IF NOT EXISTS property_questions (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      property_id INT NOT NULL,
+      buyer_id INT NOT NULL,
+      question TEXT NOT NULL,
+      answer TEXT,
+      answered_by INT,
+      answered_at TIMESTAMP NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE,
+      FOREIGN KEY (buyer_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (answered_by) REFERENCES users(id) ON DELETE SET NULL
+    ) ENGINE=InnoDB;
+  `;
+
   await pool.query(usersTable);
   await pool.query(propertiesTable);
   await pool.query(imagesTable);
   await pool.query(bookingsTable);
+  await pool.query(questionsTable);
 
   console.log('Database tables verified/created successfully.');
 }

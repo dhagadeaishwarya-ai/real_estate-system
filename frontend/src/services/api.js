@@ -74,6 +74,25 @@ export const bookingAPI = {
   }
 };
 
+export const questionAPI = {
+  getByProperty: async (propertyId) => {
+    const response = await API.get(`/questions/property/${propertyId}`);
+    return response.data;
+  },
+  create: async (questionData) => {
+    const response = await API.post('/questions', questionData);
+    return response.data;
+  },
+  answer: async (id, answer) => {
+    const response = await API.put(`/questions/${id}/answer`, { answer });
+    return response.data;
+  },
+  delete: async (id) => {
+    const response = await API.delete(`/questions/${id}`);
+    return response.data;
+  }
+};
+
 export const adminAPI = {
   getStats: async () => {
     const response = await API.get('/admin/stats');
