@@ -82,6 +82,7 @@ async function createTables() {
       id INT AUTO_INCREMENT PRIMARY KEY,
       property_id INT NOT NULL,
       image_url TEXT NOT NULL,
+      public_id VARCHAR(255) NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
     ) ENGINE=InnoDB;

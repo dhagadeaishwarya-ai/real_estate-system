@@ -112,4 +112,21 @@ export const adminAPI = {
   }
 };
 
+export const imageAPI = {
+  // Upload expects the propertyId (to associate the image) and the file itself
+  upload: async (propertyId, file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    // Include propertyId so the backend knows which property to link
+    formData.append('propertyId', propertyId);
+
+    const response = await API.post('/images/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return response.data;
+  }
+};
+
 export default API;
