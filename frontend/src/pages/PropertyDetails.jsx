@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { propertyAPI, bookingAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import LoanCalculator from '../components/LoanCalculator';
+import PropertyQnA from '../components/PropertyQnA';
 import { Calendar, User, Phone, Mail, CheckCircle, AlertCircle, Building, MapPin, Bed, Layers, CreditCard, ChevronRight, Edit2, Trash2 } from 'lucide-react';
 
 const PropertyDetails = () => {
@@ -288,6 +289,8 @@ const PropertyDetails = () => {
 
             <p style={{ color: 'var(--text-muted)', lineHeight: '1.8', whiteSpace: 'pre-line' }}>{description}</p>
           </div>
+
+          <PropertyQnA propertyId={id} canManageProperty={canManageProperty} />
 
         </div>
 

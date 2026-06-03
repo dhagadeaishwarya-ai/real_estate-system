@@ -74,6 +74,25 @@ export const bookingAPI = {
   }
 };
 
+export const questionAPI = {
+  getByProperty: async (propertyId) => {
+    const response = await API.get(`/questions/property/${propertyId}`);
+    return response.data;
+  },
+  create: async (questionData) => {
+    const response = await API.post('/questions', questionData);
+    return response.data;
+  },
+  answer: async (id, answer) => {
+    const response = await API.put(`/questions/${id}/answer`, { answer });
+    return response.data;
+  },
+  delete: async (id) => {
+    const response = await API.delete(`/questions/${id}`);
+    return response.data;
+  }
+};
+
 export const adminAPI = {
   getStats: async () => {
     const response = await API.get('/admin/stats');
@@ -89,6 +108,23 @@ export const adminAPI = {
   },
   deleteUser: async (id) => {
     const response = await API.delete(`/admin/users/${id}`);
+    return response.data;
+  }
+};
+
+export const imageAPI = {
+  // Upload expects the propertyId (to associate the image) and the file itself
+  upload: async (propertyId, file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    // Include propertyId so the backend knows which property to link
+    formData.append('propertyId', propertyId);
+
+    const response = await API.post('/images/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
     return response.data;
   }
 };

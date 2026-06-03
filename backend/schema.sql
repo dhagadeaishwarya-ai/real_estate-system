@@ -48,3 +48,18 @@ CREATE TABLE IF NOT EXISTS bookings (
   FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE,
   FOREIGN KEY (buyer_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- 5. Property Questions Table
+CREATE TABLE IF NOT EXISTS property_questions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  property_id INT NOT NULL,
+  buyer_id INT NOT NULL,
+  question TEXT NOT NULL,
+  answer TEXT,
+  answered_by INT,
+  answered_at TIMESTAMP NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE,
+  FOREIGN KEY (buyer_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (answered_by) REFERENCES users(id) ON DELETE SET NULL
+);

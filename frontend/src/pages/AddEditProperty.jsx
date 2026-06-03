@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { propertyAPI } from '../services/api';
+import { propertyAPI, imageAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { PlusCircle, FileText, CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
 
@@ -24,6 +24,8 @@ const AddEditProperty = () => {
   const [image1, setImage1] = useState('');
   const [image2, setImage2] = useState('');
   const [image3, setImage3] = useState('');
+  const [image2File, setImage2File] = useState(null);
+  const [image3File, setImage3File] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -93,7 +95,20 @@ const AddEditProperty = () => {
 
     setLoading(true);
     try {
-      const imagesArr = [image1, image2, image3].filter(url => url.trim() !== '');
+      let finalImage2 = image2;
+      let finalImage3 = image3;
+
+if (image2File) {
+  const uploaded = await imageAPI.upload(image2File);
+  finalImage2 = uploaded.image_url;
+}
+
+if (image3File) {
+  const uploaded = await imageAPI.upload(image3File);
+  finalImage3 = uploaded.image_url;
+}
+
+const imagesArr = [image1, finalImage2, finalImage3].filter(url => url.trim() !== '');
 
       const propertyData = {
         name,
@@ -113,8 +128,9 @@ const AddEditProperty = () => {
         setTimeout(() => navigate(`/listings/${id}`), 1500);
       } else {
         const res = await propertyAPI.create(propertyData);
+        const newId = res.id || res.insertId;
         setSuccess('Listing created successfully! Redirecting...');
-        setTimeout(() => navigate(`/listings/${res.propertyId}`), 1500);
+        setTimeout(() => navigate(`/listings/${newId}`), 1500);
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to submit listing details.');
@@ -304,6 +320,13 @@ const AddEditProperty = () => {
                   className="form-control"
                   style={{ fontSize: '0.85rem' }}
                 />
+                <input
+  type="file"
+  accept="image/jpeg,image/jpg"
+  onChange={(e) => setImage2File(e.target.files[0])}
+  className="form-control"
+  style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}
+/>
               </div>
               <div>
                 <label style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.2rem', display: 'block' }}>Exterior/Bathroom Image URL</label>
@@ -315,6 +338,13 @@ const AddEditProperty = () => {
                   className="form-control"
                   style={{ fontSize: '0.85rem' }}
                 />
+                <input
+  type="file"
+  accept="image/jpeg,image/jpg"
+  onChange={(e) => setImage3File(e.target.files[0])}
+  className="form-control"
+  style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}
+/>
               </div>
             </div>
           </div>
