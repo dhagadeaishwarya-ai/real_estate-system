@@ -16,10 +16,14 @@ const path = require('path');
 const app = express();
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 const PORT = process.env.PORT || 5000;
+const allowedOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:3000,http://localhost:5173')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 // Enable CORS for frontend integration
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173'], // support standard react development ports
+  origin: allowedOrigins,
   credentials: true
 }));
 
